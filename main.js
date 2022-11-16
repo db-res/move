@@ -21,7 +21,7 @@ let fristEnter = true;
 
 let prevTime = performance.now();
 
-let controlsType = 'pointerLock'
+let controlsType = 'orbit'
 
 
 init().then(res=>{
@@ -53,7 +53,7 @@ function initControls(params) {
       document.getElementById('blocker').style.display = 'none'
       controlsFun.orbitControl(controls, scene, camera, renderer).then(res=>{
         controls = res.controls
-        controls.autoRotate = false
+        controls.autoRotate = true
         controls.maxPolarAngle = Math.PI / 2;
         controls.minPolarAngle = 0;
 
