@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>three</title>
+    <style>
+      #view{
+          width: 100vw;
+          height: 100vh;
+          overflow: hidden;
+          color: aliceblue;
+      }
+      #mode{
+        width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+        background-color: aliceblue;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        z-index: 10;
+        left: 0;
+        top: 0;
+      }
+      #blocker {
+        position: fixed;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.5);
+        color: aliceblue;
+        display: none;
+        overflow: hidden;
+      }
+
+      #instructions {
+        width: 100vw;
+        height: 100vh;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        text-align: center;
+        font-size: 14px;
+        cursor: pointer;
+        overflow: hidden;
+      }
+      .changeControls{
+        position: fixed;
+        z-index: 10;
+        bottom: 10px;
+        right: 10px;
+        background-color: rgba(134, 134, 134, 0.5);
+        color: aliceblue;
+        padding: 4px 10px;
+        border-radius: 2px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div id="mode">加载中~</div>
+          <div id="view"></div>
+      <div id="blocker" style="display: none;">
+        <div id="instructions">
+          <p style="font-size:36px">
+            点击开始吧
+          </p>
+          <p>
+            移动: WASD<br/>
+            跳: SPACE<br/>
+            转动视角: 鼠标
+          </p>
+        </div>
+      </div>
+      <div class="changeControls" id="changeControls">切换控制器</div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
