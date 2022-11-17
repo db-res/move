@@ -7,6 +7,7 @@ import controlsFun from './js/controls.js'
 import worldsFun from './js/worlds.js'
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+import './js/func.js'
 
 
 const vertex = new THREE.Vector3();
@@ -77,6 +78,9 @@ function initControls(params) {
   
 }
 
+document.getElementById('orbitControlSetting').onclick = function (params) {
+  controls.autoRotate = false
+}
 
 // 初始化
 function init() {
@@ -95,7 +99,7 @@ function init() {
     document.getElementById('view').appendChild( renderer.domElement );
   
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 2000 );
-    camera.position.set( 1300, 100, 1000 );
+    camera.position.set( 1000, 1200, 1000 );
   
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
     raycaster2 = new THREE.Raycaster( new THREE.Vector3() );
@@ -113,7 +117,7 @@ function init() {
     document.addEventListener( 'click', onPointerMove );
   
     window.addEventListener( 'resize', onWindowResize );
-    document.getElementById('mode').style.display = 'none'
+    
     res()
   })
   
@@ -146,6 +150,7 @@ function animate() {
   switch (controlsType) {
     case 'orbit':
       controls&&controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
+      // document.getElementById('orbitControlSetting').
       break;
     case 'pointerLock':
       controlsFun.moveCream(controls, scene, raycaster, prevTime).then(res=>{

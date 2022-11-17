@@ -186,7 +186,7 @@ function orbitControl(controls, scene, camera, renderer) {
         controls.minPolarAngle = 0;
 
         controls.minDistance = 100;
-        controls.maxDistance = 1000;
+        controls.maxDistance = 1600;
 
         res({controls, scene, camera, renderer})
 
