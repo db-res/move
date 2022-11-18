@@ -11,25 +11,34 @@ function addscene(scene,obj) {
             color: 0x000000
         } );
     
-        let hemiLight = new THREE.HemisphereLight( 0xddeeff, 0x0f0e0d, 0.2 );
-        scene.add( hemiLight );
+        // let hemiLight = new THREE.HemisphereLight( 0xddeeff, 0x0f0e0d, 0.2 ); //半球光
+        // scene.add( hemiLight );
     
         //Create a PointLight and turn on shadows for the light
-        let light = new THREE.PointLight( '#ffffff', 1, 20000 );
+        let light = new THREE.PointLight( '#ffffff', 0.5, 20000 );
         light.add(new THREE.Mesh( bulbGeometry, bulbMat ))
-        light.position.set( 50, 20, 50 );
         light.name = 'pointLight'
         light.castShadow = true; // default false
-        light.position.y = 500
         scene.add( light );
-    
         //Set up shadow properties for the light
         light.shadow.mapSize.width = 512; // default
         light.shadow.mapSize.height = 512; // default
         light.shadow.camera.near = 0.5; // default
         light.shadow.camera.far = 500 // default
+
+        // 平行光
+        let light1 = new THREE.DirectionalLight( '#ffffff', 1 );
+        light1.add(new THREE.Mesh( bulbGeometry, bulbMat ))
+        light1.name = 'DirectionalLight'
+        light1.castShadow = true; // default false
+        light1.shadow.mapSize.width = 512; // default
+        light1.shadow.mapSize.height = 512; // default
+        light1.shadow.camera.near = 0.5; // default
+        light1.shadow.camera.far = 500 // default
+        scene.add( light1 );
     
-        const ambientLight = new THREE.AmbientLight( 0x222222 );
+    
+        const ambientLight = new THREE.AmbientLight( 0x222222 ); //环境光
         scene.add( ambientLight );
     
         // floor
@@ -164,6 +173,18 @@ function lightMove(scene, speed) {
     lp.y = Math.cos( time ) * 1000;
     lp.x = Math.sin( time ) * 5000;
     light.intensity  = Math.cos( time );
+    
+    let light1 = scene.children.find((item)=>{return item.name == 'DirectionalLight'})
+    let lp1 = light1.position
+    lp1.y = Math.cos( time ) * 1000;
+    lp1.x = Math.sin( time ) * 5000;
+    if(Math.cos( time )>0){
+        light.intensity  = Math.cos( time );
+        light1.intensity  = Math.cos( time );
+    }else{
+        light.intensity  = 0
+        light1.intensity  = 0
+    }
     // console.log(new THREE.Vector3(lp.x, lp.y, lp.z));
     // camera.lookAt(scene.children.find((item)=>{return item.name == 'lightBoll'}).position)
 }

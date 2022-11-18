@@ -1,12 +1,11 @@
 import './style.css'
-// import javascriptLogo from './javascript.svg'
-// import { setupCounter } from './counter.js'
 
 import * as THREE from 'three';
 import controlsFun from './js/controls.js'
 import worldsFun from './js/worlds.js'
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+// import funcInit from './js/func.js'
 import './js/func.js'
 
 
@@ -26,6 +25,7 @@ let controlsType = 'orbit'
 
 
 init().then(res=>{
+  // funcInit({camera, controls, scene, renderer, controlsType})
   animate()
 })
 
@@ -52,19 +52,22 @@ function initControls(params) {
     case 'orbit':
       // 轨道控制器
       document.getElementById('blocker').style.display = 'none'
+      document.getElementById('orbitControlSetting').style.display = 'block'
       controlsFun.orbitControl(controls, scene, camera, renderer).then(res=>{
         controls = res.controls
-        controls.autoRotate = true
+        // controls.autoRotate = true
         controls.maxPolarAngle = Math.PI / 2;
         controls.minPolarAngle = 0;
 
         controls.minDistance = 100;
         // controls.maxDistance = 1000;
+        // sessionStorage.setItem('controls',JSON.stringify(controls))
       })
       break;
     case 'pointerLock':
       // 指针锁定控制器
       document.getElementById('blocker').style.display = 'block'
+      document.getElementById('orbitControlSetting').style.display = 'none'
       controlsFun.pointerLockControl(controls, scene, camera, renderer).then(res=>{
         controls = res.controls
         controls.maxPolarAngle = Math.PI;
@@ -75,18 +78,17 @@ function initControls(params) {
     default:
       break;
   }
-  
 }
 
-document.getElementById('orbitControlSetting').onclick = function (params) {
-  controls.autoRotate = false
+document.getElementById('orbitControlSetting').onclick = function () {
+  controls.autoRotate = !controls.autoRotate
 }
 
 // 初始化
 function init() {
   return new Promise(res=>{
     scene = new THREE.Scene();
-    scene.background = new THREE.Color( 0xcccccc );
+    scene.background = new THREE.Color( 0x000000 );
     // scene.fog = new THREE.Fog( 0xcccccc, 100 );
     scene.fog = new THREE.FogExp2( 0xcccccc, 0.0005 );
   
@@ -107,12 +109,12 @@ function init() {
     //控制器
     initControls()
   
-    worldsFun.addscene(scene,{TextGeometry,FontLoader}).then(res=>{})
+    worldsFun.addscene(scene).then(res=>{})
   
-    worldsFun.text(scene, {TextGeometry,FontLoader}, 'text').then(res=>{
-      let text = scene.children.find(item=>{return item.name == 'text1'})
-      text.rotation.y = Math.PI * 2
-    })
+    // worldsFun.text(scene, {TextGeometry,FontLoader}, 'text').then(res=>{
+    //   let text = scene.children.find(item=>{return item.name == 'text1'})
+    //   text.rotation.y = Math.PI * 2
+    // })
   
     document.addEventListener( 'click', onPointerMove );
   
@@ -145,7 +147,8 @@ function animate() {
 
   requestAnimationFrame( animate );
 
-  worldsFun.lightMove(scene, 0.000005)
+  // worldsFun.lightMove(scene, 0.000005)
+  worldsFun.lightMove(scene, 0.00005)
   worldsFun.lightBollMove(scene)
   switch (controlsType) {
     case 'orbit':
