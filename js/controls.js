@@ -110,7 +110,7 @@ function pointerLockControl(controls, scene, camera, renderer) {
 }
 // 指针锁定控制器下的相机移动
 function moveCream(controls, scene, raycaster, prevTime, ){
-    return new Promise(r=>{
+    return new Promise(r=>{ 
 
         const time = performance.now();
     
